@@ -1,23 +1,56 @@
-import logo from './logo.svg';
 import './App.css';
+import './index.css'
+import Header from './Header';
+import Content from './Content';
+import { useState } from 'react';
 
 function App() {
+
+  const API_URL = "https://jsonplaceholder.typicode.com/"
+  
+  const [items, setNewItems] = useState([])
+  const [fetchError, setFetchError] = useState('')
+  const [isLoading, setIsLoading] = useState('')
+
+  const fetchItems = async (value) => {
+    try 
+    {
+      setIsLoading(true)
+      setFetchError('')
+
+      const req_URL = `${API_URL}${value}`
+      const response = await fetch(req_URL);
+
+      if(!response.ok) throw Error("Cannot fetch data")
+
+      const listItems = await response.json();
+      setNewItems(listItems)
+
+      setIsLoading(false)
+    } 
+    catch (err)
+    { 
+      setNewItems([])
+      setFetchError(err.message)
+    } 
+    finally 
+    {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header 
+        fetchItems = {fetchItems}
+      />
+      <main>
+        {isLoading && <p>Loading items..</p>}
+        {fetchError && <p>{`Error: ${fetchError}`}</p>}
+        <Content  
+          items = {items}
+        />
+     </main>
     </div>
   );
 }
