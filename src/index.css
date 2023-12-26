@@ -22,13 +22,11 @@ button {
   text-align: center;
 }
 
-button:hover{
+button.selected{
   background: black;
   color: white;
 }
-.content {
-  background-color: aqua;
-  width:100px;
-  height: 50px;
-  color:black
+
+table, th, td {
+   border : 1px solid;
 }

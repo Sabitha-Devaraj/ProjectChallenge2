@@ -1,11 +1,24 @@
 import React from 'react'
+import Button from './Button'
 
-const Header = ({fetchItems}) => {
+const Header = ({reqType,setReqType}) => {
   return (
    <div className='button-container'> 
-    <button type='submit' onClick={() => fetchItems('users')}>users</button>
-    <button type='submit' onClick={() => fetchItems('post')}>posts</button>
-    <button type='submit' onClick={() => fetchItems('comment')}>comments</button>
+   <Button 
+      buttonText = "users"
+      reqType ={reqType}
+      setReqType ={setReqType}
+   />
+   <Button
+      buttonText = "posts"
+      reqType ={reqType}
+      setReqType ={setReqType}
+   />
+   <Button
+      buttonText = "comments"
+      reqType ={reqType}
+      setReqType ={setReqType}
+   />
    </div>
   )
 }
